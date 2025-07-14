@@ -50,7 +50,22 @@ app.get('/', async (req, res) => {
 	//gets all Variants Aliases available 
 	const aliase = personalize.getVariantAliases();
 	const activeVariant = personalize.getActiveVariant(experienceId);
-	const variantParam = personalize.getVariantParam();
+
+
+	async function getPersonalizedExperience() {
+	try {
+		// Assuming the function returns a promise
+		const params = await personalize.getVariantParam();
+		console.log('Variant Parameters:!!!!!!!!', params);
+		return params;
+	} catch (error) {
+		console.error('Error fetching variant parameters:', error);
+	}
+	}
+
+	// Calling the async function
+	const variantParam = getPersonalizedExperience();
+	console.log(variantParam[0])
 	const variantAlias = 'cs_personalize_' + variantParam;
 
 	console.log('Experiences:', JSON.stringify(experiences, null, 2));
