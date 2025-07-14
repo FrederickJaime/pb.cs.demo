@@ -52,20 +52,27 @@ app.get('/', async (req, res) => {
 	const activeVariant = personalize.getActiveVariant(experienceId);
 
 
-	async function getPersonalizedExperience() {
-	try {
-		// Assuming the function returns a promise
-		const params = await personalize.getVariantParam();
-		console.log('Variant Parameters:!!!!!!!!', params);
-		return params;
-	} catch (error) {
-		console.error('Error fetching variant parameters:', error);
-	}
-	}
 
 	// Calling the async function
-	const variantParam = getPersonalizedExperience();
-	console.log(variantParam[0])
+	//const variantParam = personalize.getVariantParam();
+	function processVariantParam() {
+	// Assume this function might call other async operations
+	const variantParam = personalize.getVariantParam();
+	return variantParam;
+
+	// Example of continuing with other async calls
+	// await someAsyncFunction();
+	}
+
+	// Call the async function
+	const variantParam = processVariantParam();
+
+
+
+
+	
+	console.log(variantParam)
+	console.log(typeof variantParam);
 	const variantAlias = 'cs_personalize_' + variantParam;
 
 	console.log('Experiences:', JSON.stringify(experiences, null, 2));
