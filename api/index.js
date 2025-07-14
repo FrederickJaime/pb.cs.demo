@@ -67,7 +67,7 @@ app.get('/', async (req, res) => {
 	const contentBaseUID = entry?.baseUID;
 	const contentEntryTitle = entry?.title;
 	const contentEntryDesc = entry?.description;
-	const contentVarientID = Object.keys(entry.variantID);
+	//const contentVarientID = Object.keys(entry.variantID);
 
 
     if (experiences[0]?.shortUid) {
@@ -82,7 +82,7 @@ app.get('/', async (req, res) => {
 			contentBaseUID,
 			contentEntryTitle,
 			contentEntryDesc,
-			varientId : contentVarientID,
+			//varientId : contentVarientID,
 			variantParams : variantParam,
 			variantAlias : variantAlias,
 
