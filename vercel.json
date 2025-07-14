@@ -11,5 +11,11 @@
       "src": "/(.*)",
       "dest": "index.js"
     }
-  ]
+  ],
+   "env": {
+    "CS_API_KEY":"blt8e58a9f21130ec37",
+    "CS_DELIVERY_TOKEN":"cs6384b2f42779aca7204da198",
+    "CS_ENVIRONMENT":"dev",
+    "PROJECT_UID":"686ed5b2a1ba02e6b4df8848"
+  }
 }
