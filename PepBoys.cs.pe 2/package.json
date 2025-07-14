@@ -1,0 +1,17 @@
+{
+  "name": "personalize-edge-html",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@contentstack/personalize-edge-sdk": "^1.0.15",
+    "contentstack": "^3.26.0",
+    "dotenv": "^17.2.0",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "uuid": "^11.1.0"
+  }
+}
