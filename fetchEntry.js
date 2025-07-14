@@ -5,9 +5,9 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const stack = new Contentstack.Stack({
-  api_key: process.env.CS_API_KEY,
-  delivery_token: process.env.CS_DELIVERY_TOKEN,
-  environment: process.env.CS_ENVIRONMENT,
+  api_key:'blt8e58a9f21130ec37',
+  delivery_token:'cs6384b2f42779aca7204da198',
+  environment:'dev',
 });
 
 /**
