@@ -46,6 +46,7 @@ app.get('/', async (req, res) => {
 			try {
 				Personalize.setEdgeApiUrl('https://personalize-edge.contentstack.com');
 				const p = await Personalize.init(project, { 
+					request: req
 				});
 				const experiences = await p.getExperiences();
 				console.log(p);
