@@ -47,7 +47,7 @@ app.get('/', async (req, res) => {
 
     const experiences = personalize.getExperiences();
 		//gets experience ID => shortUid
-		const experienceId = experiences[0]?.shortUid;
+		const experiencesId = experiences[0].shortUid;
 		//gets all Variants Aliases available 
 		// const aliase = personalize.getVariantAliases();
 		// const activeVariant = personalize.getActiveVariant(experienceId);
@@ -65,10 +65,10 @@ app.get('/', async (req, res) => {
 	// console.log('Variant Params:', variantParam);
 	// console.log('Variant Alias:', variantAlias);
 
-	const entry = await getEntryByUid(contentTypeUid, entryUid, personalize);
+	const entry = await getEntryByUid(contentTypeUid, entryUid, 'cs_personalize_' + personalize.getVariantParam());
 	console.log(entry);
 
-	const experiencesId = experiences[0].shortUid;
+	
 
 	const contentBaseUID = entry?.baseUID;
 	const contentEntryTitle = entry?.title;
@@ -85,12 +85,12 @@ app.get('/', async (req, res) => {
 			experiencesId,
 			experiences,
 			count: experiences.length,
-			contentBaseUID,
-			contentEntryTitle,
-			contentEntryDesc,
+			// contentBaseUID,
+			// contentEntryTitle,
+			// contentEntryDesc,
 			//varientId : contentVarientID,
-			// variantParams : variantParam,
-			//variantAlias : variantAlias,
+			variantParams : personalize.getVariantParam(),
+			variantAlias : 'cs_personalize_' + personalize.getVariantParam(),
 
 
     });
