@@ -44,14 +44,21 @@ app.get('/', async (req, res) => {
     const personalize = await Personalize.init(PROJECT_UID, {
       userId // optional 
     }).then( p => {
-			let expInfo = {
-				'experiences': p.getExperiences(),
-				'shortUID': p.getExperiences()[0].shortUid,
-				'activeVariant': p.getActiveVariant(p.getExperiences()[0].shortUid),
-				'params': p.getVariantParam(),
-				'alias' : p.getVariantAliases(),
-			}
-			return expInfo;
+			let expInfo;
+			setTimeout(function(){
+				expInfo = {
+					'experiences': p.getExperiences(),
+					'shortUID': p.getExperiences()[0].shortUid,
+					'activeVariant': p.getActiveVariant(p.getExperiences()[0].shortUid),
+					'params': p.getVariantParam(),
+					'alias' : p.getVariantAliases(),
+				}
+				console.log(expInfo);
+				return expInfo;
+			},1000)
+			
+
+			
 			
 		})
 		console.log(personalize);
