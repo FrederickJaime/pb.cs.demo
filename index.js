@@ -51,7 +51,7 @@ app.get('/', async (req, res) => {
           logLevel: 'debug'
 				});
 				const experiences = await p.getExperiences();
-				console.log(p);
+
 				const expInfo = {
 					'experiences': experiences,
 					'shortUID': experiences.length > 0 ? experiences[0].shortUid : null,
@@ -70,7 +70,7 @@ app.get('/', async (req, res) => {
 		setTimeout(function(){
 			fetchPersonalizeInfo(PROJECT_UID, userId)
 			.then((expInfo) => {
-				console.log('Personalized Experience output:', JSON.stringify(expInfo, null, 2));
+				
 				return expInfo;
 			})
 			.catch((error) => {
@@ -124,8 +124,8 @@ app.get('/', async (req, res) => {
 	// console.log('Variant Params:', variantParam);
 	// console.log('Variant Alias:', variantAlias);
 
-	// const entry = await getEntryByUid(contentTypeUid, entryUid, 'cs_personalize_' + personalize.getVariantParam());
-	// console.log(entry);
+	const entry = await getEntryByUid(contentTypeUid, entryUid, 'cs_personalize_0_0');
+	console.log(entry);
 
 	
 
