@@ -19,9 +19,10 @@ const stack = new Contentstack.Stack({
  * @returns {Promise<Object>} - Returns a promise resolving to the entry JSON
  */
 // const entry = await fetchEntry('banner', 'blt1d2336678759dc1d', ['audience']);
-export async function getEntryByUid(contentTypeUid, entryUid, variantAlias) {
+export async function getEntryByUid(contentTypeUid, entryUid, personalize) {
   try {
     // this is for single entry
+    let variantAlias = 'cs_personalize_' + personalize.getVariantParam();
     const entry = await stack.ContentType(contentTypeUid).Entry(entryUid).variants(variantAlias).toJSON().fetch();
     const entryContent = {
       'baseUID': entry.uid,

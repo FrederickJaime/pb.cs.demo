@@ -49,35 +49,23 @@ app.get('/', async (req, res) => {
 		//gets experience ID => shortUid
 		const experienceId = experiences[0]?.shortUid;
 		//gets all Variants Aliases available 
-		const aliase = personalize.getVariantAliases();
-		const activeVariant = personalize.getActiveVariant(experienceId);
+		// const aliase = personalize.getVariantAliases();
+		// const activeVariant = personalize.getActiveVariant(experienceId);
 
-    
-		async function getVariantParams() {
-			const params = await personalize.getVariantParam();
-		   // Await for the response to be converted to text
-			return params;
-		}
-		let variantParam;
-		getVariantParams().then( response => {variantParam = response});
 
+		// let variantParam = personalize.getVariantParam();
 
 	
+	// console.log(variantParam)
+	// const variantAlias = 'cs_personalize_' + variantParam;
 
+	// console.log('Experiences:', JSON.stringify(experiences, null, 2));
+	// console.log('Variant Aliases:', JSON.stringify(aliase, null, 2));
+	// console.log('Active Variant:', JSON.stringify(activeVariant, null, 2));
+	// console.log('Variant Params:', variantParam);
+	// console.log('Variant Alias:', variantAlias);
 
-
-
-	
-	console.log(variantParam)
-	const variantAlias = 'cs_personalize_' + variantParam;
-
-	console.log('Experiences:', JSON.stringify(experiences, null, 2));
-	console.log('Variant Aliases:', JSON.stringify(aliase, null, 2));
-	console.log('Active Variant:', JSON.stringify(activeVariant, null, 2));
-	console.log('Variant Params:', variantParam);
-	console.log('Variant Alias:', variantAlias);
-
-	const entry = await getEntryByUid(contentTypeUid, entryUid, variantAlias);
+	const entry = await getEntryByUid(contentTypeUid, entryUid, personalize);
 	console.log(entry);
 
 	const experiencesId = experiences[0].shortUid;
@@ -101,8 +89,8 @@ app.get('/', async (req, res) => {
 			contentEntryTitle,
 			contentEntryDesc,
 			//varientId : contentVarientID,
-			variantParams : variantParam,
-			variantAlias : variantAlias,
+			// variantParams : variantParam,
+			//variantAlias : variantAlias,
 
 
     });
