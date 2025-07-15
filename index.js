@@ -4,7 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import Personalize from '@contentstack/personalize-edge-sdk';
 import dotenv from 'dotenv';
-import { setInterval } from 'timers/promises';
+
 
 dotenv.config();
 
@@ -46,7 +46,7 @@ app.get('/', async (req, res) => {
 			try {
 				Personalize.setEdgeApiUrl('https://personalize-edge.contentstack.com');
 				const p = await Personalize.init(project, { 
-					request: req
+					//request: req
 				});
 				const experiences = await p.getExperiences();
 				console.log(p);
@@ -65,17 +65,17 @@ app.get('/', async (req, res) => {
 				throw error; // or handle it as needed
 			}
 		}
-		setTimeout(function(){
-			fetchPersonalizeInfo(PROJECT_UID, userId)
-			.then((expInfo) => {
-				
-				return expInfo;
-			})
-			.catch((error) => {
-				console.error("An error occurred:", error);
-				throw error; // or handle it as needed
-			});
-		},0)
+
+		fetchPersonalizeInfo(PROJECT_UID, userId)
+		.then((expInfo) => {
+			
+			return expInfo;
+		})
+		.catch((error) => {
+			console.error("An error occurred:", error);
+			throw error; // or handle it as needed
+		});
+
 
 
 
