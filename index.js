@@ -39,29 +39,62 @@ app.get('/', async (req, res) => {
 		const contentTypeUid = 'hero';
     const entryUid = 'bltfea47ed482e0f805'; 
 
+		////////
+
+		async function fetchPersonalizeInfo(project, user) {
+			try {
+				const p = await Personalize.init(project, { user });
+				const experiences = await p.getExperiences();
+				const expInfo = {
+					'experiences': experiences,
+					'shortUID': experiences.length > 0 ? experiences[0].shortUid : null,
+					'activeVariant': experiences.length > 0 ? await p.getActiveVariant(experiences[0].shortUid) : null,
+					'params': await p.getVariantParam(),
+					'alias': await p.getVariantAliases()
+				};
+
+				return expInfo;
+
+			} catch (error) {
+				console.error("An error occurred:", error);
+				throw error; // or handle it as needed
+			}
+		}
+
+		let theEntry = fetchPersonalizeInfo(PROJECT_UID, userId)
+		.then((expInfo) => {
+			console.log('Personalized Experience output:', JSON.stringify(expInfo, null, 2));
+			return expInfo;
+		})
+		.catch((error) => {
+			console.error("An error occurred:", error);
+			throw error; // or handle it as needed
+		});
+
+
+		////////
 
 		//Home Page Banner
-    const personalize = await Personalize.init(PROJECT_UID, {
-      userId // optional 
-    }).then( p => {
-			let expInfo;
-			setTimeout(function(){
-				expInfo = {
-					'experiences': p.getExperiences(),
-					'shortUID': p.getExperiences()[0].shortUid,
-					'activeVariant': p.getActiveVariant(p.getExperiences()[0].shortUid),
-					'params': p.getVariantParam(),
-					'alias' : p.getVariantAliases(),
-				}
-				console.log(expInfo);
-				return expInfo;
-			},1000)
-			
+    // const personalize = await Personalize.init(PROJECT_UID, {
+    //   userId // optional 
+    // }).then( p => {
 
 			
-			
-		})
-		console.log(personalize);
+		// 	let	expInfo = {
+		// 			'experiences': p.getExperiences(),
+		// 			'shortUID': p.getExperiences()[0].shortUid,
+		// 			'activeVariant': p.getActiveVariant(p.getExperiences()[0].shortUid),
+		// 			'params': p.getVariantParam(),
+		// 			'alias' : p.getVariantAliases(),
+		// 	}
+		// 	getInfo(expInfo);
+		// 	return expInfo;
+
+		// })
+
+
+
+		//console.log(personalize);
     // const experiences = personalize.getExperiences();
 		// //gets experience ID => shortUid
 		// const experiencesId = experiences[0].shortUid;
