@@ -44,9 +44,9 @@ app.get('/', async (req, res) => {
 		async function fetchPersonalizeInfo(project, user) {
 			try {
 
-				const p = await Personalize.init(project, { user });
+				const p = await Personalize.init(project, { user,req });
 				const experiences = await p.getExperiences();
-				
+				console.log(p);
 				const expInfo = {
 					'experiences': experiences,
 					'shortUID': experiences.length > 0 ? experiences[0].shortUid : null,
