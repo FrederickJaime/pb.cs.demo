@@ -46,7 +46,6 @@ app.get('/', async (req, res) => {
 
 				const p = await Personalize.init(project, { user });
 				const experiences = await p.getExperiences();
-				console.log('p output:', JSON.stringify(p, null, 2));
 				
 				const expInfo = {
 					'experiences': experiences,
@@ -63,16 +62,18 @@ app.get('/', async (req, res) => {
 				throw error; // or handle it as needed
 			}
 		}
-		
-		fetchPersonalizeInfo(PROJECT_UID, userId)
-		.then((expInfo) => {
-			console.log('Personalized Experience output:', JSON.stringify(expInfo, null, 2));
-			return expInfo;
-		})
-		.catch((error) => {
-			console.error("An error occurred:", error);
-			throw error; // or handle it as needed
-		});
+		setTimeout(function(){
+			fetchPersonalizeInfo(PROJECT_UID, userId)
+			.then((expInfo) => {
+				console.log('Personalized Experience output:', JSON.stringify(expInfo, null, 2));
+				return expInfo;
+			})
+			.catch((error) => {
+				console.error("An error occurred:", error);
+				throw error; // or handle it as needed
+			});
+		},1000)
+
 
 
 		////////
