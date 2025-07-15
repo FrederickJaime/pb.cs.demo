@@ -46,21 +46,16 @@ app.get('/', async (req, res) => {
 
 				const p = await Personalize.init(project, { user });
 				const experiences = await p.getExperiences();
+				
+				const expInfo = {
+					'experiences': experiences,
+					'shortUID': experiences.length > 0 ? experiences[0].shortUid : null,
+					'activeVariant': experiences.length > 0 ? await p.getActiveVariant(experiences[0].shortUid) : null,
+					'params': await p.getVariantParam(),
+					'alias': await p.getVariantAliases()
+				};
 
-				setTimeout(function(){
-					const expInfo = {
-						'experiences': experiences,
-						'shortUID': experiences.length > 0 ? experiences[0].shortUid : null,
-						'activeVariant': experiences.length > 0 ? p.getActiveVariant(experiences[0].shortUid) : null,
-						'params': p.getVariantParam(),
-						'alias': p.getVariantAliases()
-					};
-					console.log('Personalized Experience output:', JSON.stringify(expInfo, null, 2));
-					return expInfo;
-					
-				},1000);
-
-
+				return expInfo;
 
 			} catch (error) {
 				console.error("An error occurred:", error);
