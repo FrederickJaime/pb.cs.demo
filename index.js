@@ -14,7 +14,7 @@ const __dirname = path.dirname(__filename);
 
 // Replace with your actual project UID from Contentstack Personalize
 const PROJECT_UID ='686ed5b2a1ba02e6b4df8848';
-
+//_edgeApiURL: https://personalize-edge.contentstack.com
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -30,6 +30,7 @@ app.set('view engine', 'ejs');
 app.get('/', async (req, res) => {
   try {
     const userId = 'test-user';
+		
 		const audienceNames = [
 			'Variant - Geo - Southwest',
 			'Variant - Geo - NYC',
@@ -43,15 +44,11 @@ app.get('/', async (req, res) => {
 
 		async function fetchPersonalizeInfo(project, user) {
 			try {
-
+				Personalize.setEdgeApiUrl('https://personalize-edge.contentstack.com');
 				const p = await Personalize.init(project, { 
-					user,
-					req,
-					debug: true,
-          logLevel: 'debug'
 				});
 				const experiences = await p.getExperiences();
-
+				console.log(p);
 				const expInfo = {
 					'experiences': experiences,
 					'shortUID': experiences.length > 0 ? experiences[0].shortUid : null,
