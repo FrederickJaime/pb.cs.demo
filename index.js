@@ -42,12 +42,22 @@ app.get('/', async (req, res) => {
 
 		//Home Page Banner
     const personalize = await Personalize.init(PROJECT_UID, {
-      userId
-    });
-
-    const experiences = personalize.getExperiences();
-		//gets experience ID => shortUid
-		const experiencesId = experiences[0].shortUid;
+      userId // optional 
+    }).then( p => {
+			let expInfo = {
+				'experiences': p.getExperiences(),
+				'shortUID': p.getExperiences()[0].shortUid,
+				'activeVariant': p.getActiveVariant(p.getExperiences()[0].shortUid),
+				'params': p.getVariantParam(),
+				'alias' : p.getVariantAliases(),
+			}
+			return expInfo;
+			
+		})
+		console.log(personalize);
+    // const experiences = personalize.getExperiences();
+		// //gets experience ID => shortUid
+		// const experiencesId = experiences[0].shortUid;
 		//gets all Variants Aliases available 
 		// const aliase = personalize.getVariantAliases();
 		// const activeVariant = personalize.getActiveVariant(experienceId);
@@ -65,32 +75,32 @@ app.get('/', async (req, res) => {
 	// console.log('Variant Params:', variantParam);
 	// console.log('Variant Alias:', variantAlias);
 
-	const entry = await getEntryByUid(contentTypeUid, entryUid, 'cs_personalize_' + personalize.getVariantParam());
-	console.log(entry);
+	// const entry = await getEntryByUid(contentTypeUid, entryUid, 'cs_personalize_' + personalize.getVariantParam());
+	// console.log(entry);
 
 	
 
-	const contentBaseUID = entry?.baseUID;
-	const contentEntryTitle = entry?.title;
-	const contentEntryDesc = entry?.description;
+	// const contentBaseUID = entry?.baseUID;
+	// const contentEntryTitle = entry?.title;
+	// const contentEntryDesc = entry?.description;
 	//const contentVarientID = Object.keys(entry.variantID);
 
 
-    if (experiences[0]?.shortUid) {
-      await personalize.triggerImpression(experiences[0].shortUid);
-    }
+    // if (experiences[0]?.shortUid) {
+    //   await personalize.triggerImpression(experiences[0].shortUid);
+    // }
 
     res.render('index', {
       projectId: PROJECT_UID,
-			experiencesId,
-			experiences,
-			count: experiences.length,
-			// contentBaseUID,
-			// contentEntryTitle,
-			// contentEntryDesc,
-			//varientId : contentVarientID,
-			variantParams : personalize.getVariantParam(),
-			variantAlias : 'cs_personalize_' + personalize.getVariantParam(),
+			// experiencesId,
+			// experiences,
+			// count: experiences.length,
+			// // contentBaseUID,
+			// // contentEntryTitle,
+			// // contentEntryDesc,
+			// //varientId : contentVarientID,
+			// variantParams : personalize.getVariantParam(),
+			// variantAlias : 'cs_personalize_' + personalize.getVariantParam(),
 
 
     });
