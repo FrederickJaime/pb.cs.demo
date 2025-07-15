@@ -72,7 +72,7 @@ app.get('/', async (req, res) => {
 				console.error("An error occurred:", error);
 				throw error; // or handle it as needed
 			});
-		},1000)
+		},0)
 
 
 
