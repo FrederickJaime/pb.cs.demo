@@ -43,25 +43,32 @@ app.get('/', async (req, res) => {
 
 		async function fetchPersonalizeInfo(project, user) {
 			try {
+
 				const p = await Personalize.init(project, { user });
 				const experiences = await p.getExperiences();
-				const expInfo = {
-					'experiences': experiences,
-					'shortUID': experiences.length > 0 ? experiences[0].shortUid : null,
-					'activeVariant': experiences.length > 0 ? await p.getActiveVariant(experiences[0].shortUid) : null,
-					'params': await p.getVariantParam(),
-					'alias': await p.getVariantAliases()
-				};
 
-				return expInfo;
+				setTimeout(function(){
+					const expInfo = {
+						'experiences': experiences,
+						'shortUID': experiences.length > 0 ? experiences[0].shortUid : null,
+						'activeVariant': experiences.length > 0 ? p.getActiveVariant(experiences[0].shortUid) : null,
+						'params': p.getVariantParam(),
+						'alias': p.getVariantAliases()
+					};
+					console.log('Personalized Experience output:', JSON.stringify(expInfo, null, 2));
+					return expInfo;
+					
+				},1000);
+
+
 
 			} catch (error) {
 				console.error("An error occurred:", error);
 				throw error; // or handle it as needed
 			}
 		}
-
-		let theEntry = fetchPersonalizeInfo(PROJECT_UID, userId)
+		
+		fetchPersonalizeInfo(PROJECT_UID, userId)
 		.then((expInfo) => {
 			console.log('Personalized Experience output:', JSON.stringify(expInfo, null, 2));
 			return expInfo;
