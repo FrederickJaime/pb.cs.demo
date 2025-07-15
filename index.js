@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import Personalize from '@contentstack/personalize-edge-sdk';
 import dotenv from 'dotenv';
+import { setInterval } from 'timers/promises';
 
 dotenv.config();
 
@@ -44,35 +45,30 @@ app.get('/', async (req, res) => {
       userId
     });
 
-  const experiences = personalize.getExperiences();
-	//gets experience ID => shortUid
-	const experienceId = experiences[0]?.shortUid;
-	//gets all Variants Aliases available 
-	const aliase = personalize.getVariantAliases();
-	const activeVariant = personalize.getActiveVariant(experienceId);
+    const experiences = personalize.getExperiences();
+		//gets experience ID => shortUid
+		const experienceId = experiences[0]?.shortUid;
+		//gets all Variants Aliases available 
+		const aliase = personalize.getVariantAliases();
+		const activeVariant = personalize.getActiveVariant(experienceId);
+
+    
+		async function getVariantParams() {
+			const params = await personalize.getVariantParam();
+		   // Await for the response to be converted to text
+			return params;
+		}
+		let variantParam;
+		getVariantParams().then( response => {variantParam = response});
 
 
-
-	// Calling the async function
-	//const variantParam = personalize.getVariantParam();
-	function processVariantParam() {
-	// Assume this function might call other async operations
-	const variantParam = personalize.getVariantParam();
-	return variantParam;
-
-	// Example of continuing with other async calls
-	// await someAsyncFunction();
-	}
-
-	// Call the async function
-	const variantParam = processVariantParam();
+	
 
 
 
 
 	
 	console.log(variantParam)
-	console.log(typeof variantParam);
 	const variantAlias = 'cs_personalize_' + variantParam;
 
 	console.log('Experiences:', JSON.stringify(experiences, null, 2));
