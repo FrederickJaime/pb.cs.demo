@@ -44,7 +44,12 @@ app.get('/', async (req, res) => {
 		async function fetchPersonalizeInfo(project, user) {
 			try {
 
-				const p = await Personalize.init(project, { user,req });
+				const p = await Personalize.init(project, { 
+					user,
+					req,
+					debug: true,
+          logLevel: 'debug'
+				});
 				const experiences = await p.getExperiences();
 				console.log(p);
 				const expInfo = {
