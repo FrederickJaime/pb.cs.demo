@@ -46,6 +46,7 @@ app.get('/', async (req, res) => {
 
 				const p = await Personalize.init(project, { user });
 				const experiences = await p.getExperiences();
+				console.log('p output:', JSON.stringify(p, null, 2));
 				
 				const expInfo = {
 					'experiences': experiences,
