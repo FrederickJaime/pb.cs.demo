@@ -64,6 +64,7 @@ app.get('/', async (req, res) => {
         });
 
         experiences = await personalizeSdk.getExperiences();
+				console.log(experiences);
 
         // Optionally, add personalization state to response headers (for debugging or client use)
         //personalizeSdk.addStateToResponse(res); //
@@ -74,7 +75,6 @@ app.get('/', async (req, res) => {
         res.status(500).json({ error: "Failed to fetch personalization data" });
     }
 
-		console.log(experiences);
 
 
 
