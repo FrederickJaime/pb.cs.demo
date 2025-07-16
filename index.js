@@ -1,5 +1,4 @@
 import express from 'express';
-import { getEntryByUid } from './fetchEntry.js';
 import { setSdk } from './setSdk.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -30,20 +29,23 @@ app.set('view engine', 'ejs');
 // Route
 app.get('/', async (req, res) => {
   try {
-    const userId = 'test-user';
-		const contentTypeUid = 'hero';
-    const entryUid = 'bltfea47ed482e0f805';
 
 		const persolanizeSDK = await setSdk(req);
 		console.log('this is it', persolanizeSDK);
 
 		//EXPERIENCE VALUES
-		
-		const experience = JSON.stringify(persolanizeSDK.experiences[0], null, 2);
+		const experience = persolanizeSDK.experiences;
 		const experienceShortId = persolanizeSDK.experiences[0].shortUid;
 		const experienceActiveVariant = persolanizeSDK.experiences[0].activeVariantShortUid;
 		const experienceVariantParams = persolanizeSDK.params;
 		const experienceVariantAlias = persolanizeSDK.alias;
+
+		//VARIANT VALUES
+		const variantBaseUID = persolanizeSDK.baseUID;
+		const variantTitle = persolanizeSDK.title;
+		const variantDesc = persolanizeSDK.description;
+		const variantPayload = persolanizeSDK.variant;
+
 
 
 
@@ -63,7 +65,11 @@ app.get('/', async (req, res) => {
 			experienceShortId,
 			experienceActiveVariant,
 			experienceVariantParams,
-			experienceVariantAlias
+			experienceVariantAlias,
+			variantBaseUID,
+			variantTitle,
+			variantDesc,
+			variantPayload
     });
   } catch (err) {
     console.error('Personalize SDK error:', err);
