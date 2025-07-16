@@ -19,7 +19,7 @@ export async function setSdk(req) {
 			const protocol = req.protocol || (req.get('X-Forwarded-Proto') || 'http');
 			const host = req.get('host');
 			const fullUrl = `${protocol}://${host}${req.originalUrl || req.url}`;
-			
+
 			const uaString = req.headers['user-agent'];
 			const parser = new UAParser(uaString); // Create an instance of UAParser
 			const ua = parser.getResult(); // Get the parsed result
@@ -47,7 +47,8 @@ export async function setSdk(req) {
 					'baseUID': entry.baseUID,
 					'title': entry.title,
 					'description': entry.description,
-					'variant': JSON.stringify(entry.variantID, null, 2)
+					'variant': JSON.stringify(entry.variantID, null, 2),
+					'user-agent': JSON.stringify(ua, null, 2)
 			}
 			// Optionally, add personalization state to response headers (for debugging or client use)
 			//personalizeSdk.addStateToResponse(res); //
