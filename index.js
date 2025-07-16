@@ -35,8 +35,8 @@ app.get('/', async (req, res) => {
 
 		//EXPERIENCE VALUES
 		const experience = persolanizeSDK.experiences;
-		const experienceShortId = persolanizeSDK.experiences[0].shortUid;
-		const experienceActiveVariant = persolanizeSDK.experiences[0].activeVariantShortUid;
+		const experienceShortId = persolanizeSDK.shortUID;
+		const experienceActiveVariant = persolanizeSDK.activeVariant;
 		const experienceVariantParams = persolanizeSDK.params;
 		const experienceVariantAlias = persolanizeSDK.alias;
 

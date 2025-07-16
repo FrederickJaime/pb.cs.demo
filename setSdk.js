@@ -29,13 +29,12 @@ export async function setSdk(req) {
 			});
 
 			const experiences = personalizeSdk.getExperiences();
-
 			const entry = await getEntryByUid(contentTypeUid, entryUid, personalizeSdk.getVariantAliases());
 
 			const persolanizeExperienceInfo = {
 					'experiences': JSON.stringify(experiences, null, 2),
 					'shortUID': experiences.length > 0 ? experiences[0].shortUid : null,
-					'activeVariant': experiences.length > 0 ? await personalizeSdk.getActiveVariant(experiences[0].shortUid) : null,
+					'activeVariant': experiences.length > 0 ? personalizeSdk.getActiveVariant(experiences[0].shortUid) : null,
 					'params': personalizeSdk.getVariantParam(),
 					'alias': personalizeSdk.getVariantAliases(),
 					'baseUID': entry.baseUID,
