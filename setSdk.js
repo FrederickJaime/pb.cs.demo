@@ -2,6 +2,9 @@
 import Personalize from '@contentstack/personalize-edge-sdk';
 import { getEntryByUid } from './fetchEntry.js';
 import { Request, Headers } from 'node-fetch';
+import http from 'http';
+import { UAParser } from 'ua-parser-js'; // Corrected import statement
+
 
 const PROJECT_UID ='686ed5b2a1ba02e6b4df8848';
 const userId = 'test-user';
@@ -16,6 +19,10 @@ export async function setSdk(req) {
 			const protocol = req.protocol || (req.get('X-Forwarded-Proto') || 'http');
 			const host = req.get('host');
 			const fullUrl = `${protocol}://${host}${req.originalUrl || req.url}`;
+			
+			const uaString = req.headers['user-agent'];
+			const parser = new UAParser(uaString); // Create an instance of UAParser
+			const ua = parser.getResult(); // Get the parsed result
 
 			const standardRequest = new Request(fullUrl, {
 					method: req.method,
@@ -29,6 +36,7 @@ export async function setSdk(req) {
 
 			const experiences = personalizeSdk.getExperiences();
 			const entry = await getEntryByUid(contentTypeUid, entryUid, personalizeSdk.getVariantAliases());
+			console.log(ua);
 
 			const persolanizeExperienceInfo = {
 					'experiences': JSON.stringify(experiences, null, 2),

@@ -13,7 +13,6 @@ const __dirname = path.dirname(__filename);
 
 // Replace with your actual project UID from Contentstack Personalize
 const PROJECT_UID ='686ed5b2a1ba02e6b4df8848';
-//_edgeApiURL: https://personalize-edge.contentstack.com
 
 const app = express();
 const PORT = process.env.PORT || 3000;
