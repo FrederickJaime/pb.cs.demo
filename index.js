@@ -1,5 +1,6 @@
 import express from 'express';
 import { getEntryByUid } from './fetchEntry.js';
+import { getSdk } from './fetchSdk.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import Personalize from '@contentstack/personalize-edge-sdk';
@@ -40,41 +41,46 @@ app.get('/', async (req, res) => {
 		const contentTypeUid = 'hero';
     const entryUid = 'bltfea47ed482e0f805'; 
 
-		////////
 
-		async function fetchPersonalizeInfo(project, user) {
-			try {
-				Personalize.setEdgeApiUrl('https://personalize-edge.contentstack.com');
-				const p = await Personalize.init(project, { 
-					//request: req
-				});
-				const experiences = await p.getExperiences();
-				console.log(p);
-				const expInfo = {
-					'experiences': experiences,
-					'shortUID': experiences.length > 0 ? experiences[0].shortUid : null,
-					'activeVariant': experiences.length > 0 ? await p.getActiveVariant(experiences[0].shortUid) : null,
-					'params': await p.getVariantParam(),
-					'alias': await p.getVariantAliases()
-				};
 
-				return expInfo;
+		const entry = await getSdk();
+	  console.log(entry);
 
-			} catch (error) {
-				console.error("An error occurred:", error);
-				throw error; // or handle it as needed
-			}
-		}
 
-		fetchPersonalizeInfo(PROJECT_UID, userId)
-		.then((expInfo) => {
+
+		// async function fetchPersonalizeInfo(project, user) {
+		// 	try {
+		// 		Personalize.setEdgeApiUrl('https://personalize-edge.contentstack.com');
+		// 		const p = await Personalize.init(project, { 
+		// 			//request: req
+		// 		});
+		// 		const experiences = await p.getExperiences();
+		// 		console.log(p);
+		// 		const expInfo = {
+		// 			'experiences': experiences,
+		// 			'shortUID': experiences.length > 0 ? experiences[0].shortUid : null,
+		// 			'activeVariant': experiences.length > 0 ? await p.getActiveVariant(experiences[0].shortUid) : null,
+		// 			'params': await p.getVariantParam(),
+		// 			'alias': await p.getVariantAliases()
+		// 		};
+
+		// 		return expInfo;
+
+		// 	} catch (error) {
+		// 		console.error("An error occurred:", error);
+		// 		throw error; // or handle it as needed
+		// 	}
+		// }
+
+		// fetchPersonalizeInfo(PROJECT_UID, userId)
+		// .then((expInfo) => {
 			
-			return expInfo;
-		})
-		.catch((error) => {
-			console.error("An error occurred:", error);
-			throw error; // or handle it as needed
-		});
+		// 	return expInfo;
+		// })
+		// .catch((error) => {
+		// 	console.error("An error occurred:", error);
+		// 	throw error; // or handle it as needed
+		// });
 
 
 
@@ -122,8 +128,8 @@ app.get('/', async (req, res) => {
 	// console.log('Variant Params:', variantParam);
 	// console.log('Variant Alias:', variantAlias);
 
-	const entry = await getEntryByUid(contentTypeUid, entryUid, 'cs_personalize_0_0');
-	console.log(entry);
+	// const entry = await getEntryByUid(contentTypeUid, entryUid, 'cs_personalize_0_0');
+	// console.log(entry);
 
 	
 
