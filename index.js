@@ -41,7 +41,7 @@ app.get('/', async (req, res) => {
 		const contentTypeUid = 'hero';
     const entryUid = 'bltfea47ed482e0f805';
 		
-
+		let experiences = [];
 
 		Personalize.setEdgeApiUrl('https://personalize-edge.contentstack.com');
 
@@ -63,7 +63,7 @@ app.get('/', async (req, res) => {
             request: standardRequest, // Pass the constructed Request object
         });
 
-        const experiences = await personalizeSdk.getExperiences();
+        experiences = await personalizeSdk.getExperiences();
 
         // Optionally, add personalization state to response headers (for debugging or client use)
         //personalizeSdk.addStateToResponse(res); //
@@ -74,6 +74,7 @@ app.get('/', async (req, res) => {
         res.status(500).json({ error: "Failed to fetch personalization data" });
     }
 
+		console.log(experiences);
 
 
 
