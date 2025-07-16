@@ -1,11 +1,10 @@
 import express from 'express';
 import { getEntryByUid } from './fetchEntry.js';
-import { getSdk } from './fetchSdk.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import Personalize from '@contentstack/personalize-edge-sdk';
 import dotenv from 'dotenv';
-
+import { Request, Headers } from 'node-fetch';
 
 dotenv.config();
 
@@ -21,6 +20,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Set up EJS templating
+app.use(express.json());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -39,12 +39,41 @@ app.get('/', async (req, res) => {
 			'Variant - Geo - NYC LIC'
 		]
 		const contentTypeUid = 'hero';
-    const entryUid = 'bltfea47ed482e0f805'; 
+    const entryUid = 'bltfea47ed482e0f805';
+		
 
 
+		Personalize.setEdgeApiUrl('https://personalize-edge.contentstack.com');
 
-		const entry = await getSdk();
-	  console.log(entry);
+    try {
+
+				const headers = new Headers(req.headers);
+
+        const protocol = req.protocol || (req.get('X-Forwarded-Proto') || 'http');
+        const host = req.get('host');
+        const fullUrl = `${protocol}://${host}${req.originalUrl || req.url}`;
+
+        const standardRequest = new Request(fullUrl, {
+            method: req.method,
+            headers: headers,
+            // body: req.method === 'POST' || req.method === 'PUT' ? JSON.stringify(req.body) : undefined, // If your personalization involves request body
+        });
+
+        const personalizeSdk = await Personalize.init(PROJECT_UID, {
+            request: standardRequest, // Pass the constructed Request object
+        });
+
+        const experiences = await personalizeSdk.getExperiences();
+
+        // Optionally, add personalization state to response headers (for debugging or client use)
+        //personalizeSdk.addStateToResponse(res); //
+
+        return res.status(200).json({ experiences }); 
+    } catch (error) {
+        console.error("Personalization SDK Error:", error);
+        res.status(500).json({ error: "Failed to fetch personalization data" });
+    }
+
 
 
 
