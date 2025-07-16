@@ -23,9 +23,6 @@ app.use(express.json());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// const entry = await fetchEntry('banner', 'blt1d2336678759dc1d', ['audience']);
-// res.json(entry); // or render
-
 // Route
 app.get('/', async (req, res) => {
   try {
@@ -45,14 +42,6 @@ app.get('/', async (req, res) => {
 		const variantTitle = persolanizeSDK.title;
 		const variantDesc = persolanizeSDK.description;
 		const variantPayload = persolanizeSDK.variant;
-
-
-
-
-	// const entry = await getEntryByUid(contentTypeUid, entryUid, 'cs_personalize_0_0');
-	// console.log(entry);
-
-	
 
 
     // if (experiences[0]?.shortUid) {

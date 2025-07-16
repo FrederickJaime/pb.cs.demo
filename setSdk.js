@@ -20,7 +20,6 @@ export async function setSdk(req) {
 			const standardRequest = new Request(fullUrl, {
 					method: req.method,
 					headers: headers,
-					// body: req.method === 'POST' || req.method === 'PUT' ? JSON.stringify(req.body) : undefined, // If your personalization involves request body
 			});
 
 			const personalizeSdk = await Personalize.init(PROJECT_UID, {
