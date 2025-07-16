@@ -48,7 +48,7 @@ export async function setSdk(req) {
 					'title': entry.title,
 					'description': entry.description,
 					'variant': JSON.stringify(entry.variantID, null, 2),
-					'user-agent': JSON.stringify(ua, null, 2)
+					'userAgent': JSON.stringify(ua, null, 2)
 			}
 			// Optionally, add personalization state to response headers (for debugging or client use)
 			//personalizeSdk.addStateToResponse(res); //

@@ -42,6 +42,9 @@ app.get('/', async (req, res) => {
 		const variantDesc = persolanizeSDK.description;
 		const variantPayload = persolanizeSDK.variant;
 
+		//USER AGENT
+		const userAgentInfo = persolanizeSDK.userAgent;
+
 
     // if (experiences[0]?.shortUid) {
     //   await personalize.triggerImpression(experiences[0].shortUid);
@@ -57,7 +60,8 @@ app.get('/', async (req, res) => {
 			variantBaseUID,
 			variantTitle,
 			variantDesc,
-			variantPayload
+			variantPayload,
+			userAgentInfo
     });
   } catch (err) {
     console.error('Personalize SDK error:', err);
